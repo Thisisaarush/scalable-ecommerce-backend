@@ -26,6 +26,14 @@ services:
       - MONGO_URI=${MONGO_URI_CART}
     depends_on:
       - mongo
+  order-service:
+    build: ./order-service
+    ports:
+      - 5003:5003
+    environment:
+      - MONGO_URI=${MONGO_URI_ORDER}
+    depends_on:
+      - mongo
 
   mongo:
     image: mongo
