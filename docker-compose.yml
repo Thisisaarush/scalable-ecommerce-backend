@@ -8,8 +8,12 @@ services:
     environment:
       - MONGO_URI=${MONGO_URI_USERS}
       - JWT_SECRET=${JWT_SECRET}
+    networks:
+      - ecommerce-network
     depends_on:
       - mongo
+    deploy:
+      replicas: 2
 
   product-service:
     build: ./product-service
@@ -17,8 +21,12 @@ services:
       - 5001:5001
     environment:
       - MONGO_URI=${MONGO_URI_PRODUCTS}
+    networks:
+      - ecommerce-network
     depends_on:
       - mongo
+    deploy:
+      replicas: 2
 
   shopping-cart-service:
     build: ./shopping-cart-service
@@ -26,8 +34,12 @@ services:
       - 5002:5002
     environment:
       - MONGO_URI=${MONGO_URI_CART}
+    networks:
+      - ecommerce-network
     depends_on:
       - mongo
+    deploy:
+      replicas: 2
 
   order-service:
     build: ./order-service
@@ -35,8 +47,12 @@ services:
       - 5003:5003
     environment:
       - MONGO_URI=${MONGO_URI_ORDER}
+    networks:
+      - ecommerce-network
     depends_on:
       - mongo
+    deploy:
+      replicas: 2
 
   payment-service:
     build: ./payment-service
@@ -45,8 +61,12 @@ services:
     environment:
       - MONGO_URI=${MONGO_URI_PAYMENT}
       - STRIPE_SECRET_KEY=${STRIPE_SECRET_KEY}
+    networks:
+      - ecommerce-network
     depends_on:
       - mongo
+    deploy:
+      replicas: 2
 
   notification-service:
     build: ./notification-service
@@ -58,6 +78,8 @@ services:
       - TWILIO_ACCOUNT_SID=${TWILIO_ACCOUNT_SID}
       - TWILIO_AUTH_TOKEN=${TWILIO_AUTH_TOKEN}
       - TWILIO_PHONE_NUMBER=${TWILIO_PHONE_NUMBER}
+    networks:
+      - ecommerce-network
 
   mongo:
     image: mongo
@@ -65,6 +87,27 @@ services:
       - "27017:27017"
     volumes:
       - mongo-data:/data/db
+    networks:
+      - ecommerce-network
+
+  nginx:
+    image: nginx:latest
+    ports:
+      - "80:80"
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf
+    networks:
+      - ecommerce-network
+    depends_on:
+      - user-service
+      - product-service
+      - shopping-cart-service
+      - order-service
+      - payment-service
 
 volumes:
   mongo-data:
+
+networks:
+  ecommerce-network:
+    driver: bridge
