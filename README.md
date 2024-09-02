@@ -6,6 +6,9 @@
 - Express.js
 - MongoDB
 - Docker
+- Nginx
+- Kubernetes
+- Stripe
 
 ## How to run the project using docker (Recommended)
 
