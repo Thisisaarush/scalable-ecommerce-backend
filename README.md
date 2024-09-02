@@ -14,3 +14,7 @@ docker compose up --build
 ```
 
 Here `--build` is used to build the image again if there are any changes in the code.
+
+## Github Actions (CI/CD)
+
+- Add `DOCKER_USERNAME` & `DOCKER_PASSWORD` to github secrets to push the image to docker hub.

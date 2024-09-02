@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: shopping-cart-service
+  labels:
+    app: shopping-cart-service
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: shopping-cart-service
+  template:
+    metadata:
+      labels:
+        app: shopping-cart-service
+    spec:
+      containers:
+        - name: shopping-cart-service
+          image: thisisaarush/shopping-cart-service:latest
+          ports:
+            - containerPort: 5002

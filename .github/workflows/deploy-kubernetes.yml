@@ -1,0 +1,40 @@
+name: Deploy to Kubernetes
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        service:
+          [
+            user-service,
+            product-service,
+            shopping-cart-service,
+            order-service,
+            payment-service,
+            notification-service,
+          ]
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up kubectl
+        uses: azure/setup-kubectl@v1
+
+      - name: Authenticate to Kubernetes
+        uses: azure/cli@v1
+        with:
+          azcliversion: "2.0.72"
+          inlineScript: "echo 'Authenticated to Kubernetes'"
+
+      - name: Deploy to Kubernetes
+        run: |
+          kubectl apply -f ${{ matrix.service }}/deployment.yaml
+          kubectl apply -f ${{ matrix.service }}/service.yaml
