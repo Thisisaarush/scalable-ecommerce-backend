@@ -4,10 +4,18 @@ services:
   user-service:
     build: ./user-service
     ports:
-      - "5000:5000"
+      - 5000:5000
     environment:
       - MONGO_URI=${MONGO_URI}
       - JWT_SECRET=${JWT_SECRET}
+    depends_on:
+      - mongo
+  product-service:
+    build: ./product-service
+    ports:
+      - 5001:5001
+    environment:
+      - MONGO_URI=${MONGO_URI}
     depends_on:
       - mongo
 

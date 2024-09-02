@@ -1,18 +1,17 @@
 const express = require("express")
 const dotenv = require("dotenv")
 const mongoose = require("mongoose")
-const userRoutes = require("./routes/user")
+const productRoutes = require("./routes/product")
 
-const PORT = process.env.PORT || 5000
+const PORT = process.env.PORT || 5001
 
-dotenv.config()
 const app = express()
+dotenv.config()
 
-// middleware
 app.use(express.json())
 
-// routes
-app.use("/api/users", userRoutes)
+// Routes
+app.use("/api/products", productRoutes)
 
 mongoose
   .connect(process.env.MONGO_URI, {
@@ -22,9 +21,10 @@ mongoose
   .then(() => {
     console.log("Connected to MongoDB")
     app.listen(PORT, () => {
-      console.log(`Server is running on port ${PORT}`)
+      console.log(`Product service is running on port ${PORT}`)
     })
   })
   .catch((err) => {
-    console.error("Failed to connect to Database -> User Service", err)
+    console.log("Error connecting to MongoDB -> Product Service", err)
   })
+ 
