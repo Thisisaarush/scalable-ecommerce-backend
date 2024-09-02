@@ -25,5 +25,5 @@ mongoose
     })
   })
   .catch((err) => {
-    console.log("🚫 Failed to connect to MongoDB -> Order Service")
+    console.error("🚫 Failed to connect to MongoDB -> Order Service", err)
   })

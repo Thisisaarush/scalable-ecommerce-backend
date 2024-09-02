@@ -34,6 +34,15 @@ services:
       - MONGO_URI=${MONGO_URI_ORDER}
     depends_on:
       - mongo
+  payment-service:
+    build: ./payment-service
+    ports:
+      - 5004:5004
+    environment:
+      - MONGO_URI=${MONGO_URI_PAYMENT}
+      - STRIPE_SECRET_KEY=${STRIPE_SECRET_KEY}
+    depends_on:
+      - mongo
 
   mongo:
     image: mongo

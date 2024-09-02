@@ -25,5 +25,5 @@ mongoose
     })
   })
   .catch((err) => {
-    console.log("🚫 Error connecting to MongoDB -> Product Service", err)
+    console.error("🚫 Error connecting to MongoDB -> Product Service", err)
   })

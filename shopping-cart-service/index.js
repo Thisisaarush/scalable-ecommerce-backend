@@ -25,5 +25,8 @@ mongoose
     })
   })
   .catch((error) => {
-    console.log("🚫 Failed to connect to MongoDB -> Shopping Cart Service")
+    console.error(
+      "🚫 Failed to connect to MongoDB -> Shopping Cart Service",
+      error
+    )
   })
