@@ -10,6 +10,7 @@ services:
       - JWT_SECRET=${JWT_SECRET}
     depends_on:
       - mongo
+
   product-service:
     build: ./product-service
     ports:
@@ -18,6 +19,7 @@ services:
       - MONGO_URI=${MONGO_URI_PRODUCTS}
     depends_on:
       - mongo
+
   shopping-cart-service:
     build: ./shopping-cart-service
     ports:
@@ -26,6 +28,7 @@ services:
       - MONGO_URI=${MONGO_URI_CART}
     depends_on:
       - mongo
+
   order-service:
     build: ./order-service
     ports:
@@ -34,6 +37,7 @@ services:
       - MONGO_URI=${MONGO_URI_ORDER}
     depends_on:
       - mongo
+
   payment-service:
     build: ./payment-service
     ports:
@@ -43,6 +47,17 @@ services:
       - STRIPE_SECRET_KEY=${STRIPE_SECRET_KEY}
     depends_on:
       - mongo
+
+  notification-service:
+    build: ./notification-service
+    ports:
+      - 5005:5005
+    environment:
+      - NODEMAILER_EMAIL=${NODEMAILER_EMAIL}
+      - NODEMAILER_PASSWORD=${NODEMAILER_PASSWORD}
+      - TWILIO_ACCOUNT_SID=${TWILIO_ACCOUNT_SID}
+      - TWILIO_AUTH_TOKEN=${TWILIO_AUTH_TOKEN}
+      - TWILIO_PHONE_NUMBER=${TWILIO_PHONE_NUMBER}
 
   mongo:
     image: mongo
