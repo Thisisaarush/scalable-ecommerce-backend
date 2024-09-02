@@ -19,12 +19,11 @@ mongoose
     useUnifiedTopology: true,
   })
   .then(() => {
-    console.log("Connected to MongoDB")
+    console.log("✅ Product Service is Connected to MongoDB")
     app.listen(PORT, () => {
       console.log(`Product service is running on port ${PORT}`)
     })
   })
   .catch((err) => {
-    console.log("Error connecting to MongoDB -> Product Service", err)
+    console.log("🚫 Error connecting to MongoDB -> Product Service", err)
   })
- 

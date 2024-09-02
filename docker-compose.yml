@@ -6,7 +6,7 @@ services:
     ports:
       - 5000:5000
     environment:
-      - MONGO_URI=${MONGO_URI}
+      - MONGO_URI=${MONGO_URI_USERS}
       - JWT_SECRET=${JWT_SECRET}
     depends_on:
       - mongo
@@ -15,7 +15,15 @@ services:
     ports:
       - 5001:5001
     environment:
-      - MONGO_URI=${MONGO_URI}
+      - MONGO_URI=${MONGO_URI_PRODUCTS}
+    depends_on:
+      - mongo
+  shopping-cart-service:
+    build: ./shopping-cart-service
+    ports:
+      - 5002:5002
+    environment:
+      - MONGO_URI=${MONGO_URI_CART}
     depends_on:
       - mongo
 

@@ -1,18 +1,17 @@
 const express = require("express")
 const dotenv = require("dotenv")
 const mongoose = require("mongoose")
-const userRoutes = require("./routes/user")
+const cartRoutes = require("./routes/cart")
 
-const PORT = process.env.PORT || 5000
+const PORT = process.env.PORT || 5002
 
 dotenv.config()
 const app = express()
 
-// middleware
 app.use(express.json())
 
 // routes
-app.use("/api/users", userRoutes)
+app.use("/api/cart", cartRoutes)
 
 mongoose
   .connect(process.env.MONGO_URI, {
@@ -20,11 +19,11 @@ mongoose
     useUnifiedTopology: true,
   })
   .then(() => {
-    console.log("✅ User Service is Connected to MongoDB")
+    console.log("✅ Shopping Cart Service is Connected to MongoDB")
     app.listen(PORT, () => {
-      console.log(`Server is running on port ${PORT}`)
+      console.log(`Listening on PORT ${PORT}`)
     })
   })
-  .catch((err) => {
-    console.error("🚫 Failed to connect to Database -> User Service", err)
+  .catch((error) => {
+    console.log("🚫 Failed to connect to MongoDB -> Shopping Cart Service")
   })
